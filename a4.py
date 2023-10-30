@@ -20,10 +20,32 @@ class TTTBoard:
         return s
 
     def make_move(self, player, pos) -> bool:
-        if pos < 0 or pos > 8 or self.board(pos) != '*':
+        if pos < 0 or pos > 8 or self.board[pos] != '*':
             return False
         self.board[pos] = player
         return True
+
+    def has_won(self, player) -> bool:
+        ps = [player] * 3 
+        if self.board[0:3] == ps or self.board[3:6] == ps or self.board[6:9] == ps:
+            return True
+        if self.board[::3] == ps or self.board[1::3] == ps or self.board[2::3] == ps:
+            return True
+        if self.board[::4] == ps or self.board[2:7:2] == ps:
+            return True
+
+        return False
+
+
+    def game_over(self) -> bool:
+        if "*" not in self.board or self.has_won("X") or self.has_won("O"):
+            return True
+        return False
+
+    def clear(self) -> None:
+        self.board = ['*'] * 9
+
+
 
 
 
